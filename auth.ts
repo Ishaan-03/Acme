@@ -20,7 +20,7 @@ export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
-      async authorize(credentials: Record<"email" | "password", string> | undefined) {
+      async authorize(credentials: Partial<Record<string, unknown>> | undefined, req: Request): Promise<User | null> {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
